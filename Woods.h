@@ -51,7 +51,7 @@ public:
 
 	int mapsize;
 
-	Woods(int);
+	explicit Woods(int);
 	~Woods();
 
 	int getMapSize() const { return mapsize; };

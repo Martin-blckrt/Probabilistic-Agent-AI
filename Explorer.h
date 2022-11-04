@@ -27,7 +27,7 @@ private:
 	Woods * map;
 
 public:
-	Explorer(Woods*);
+	explicit Explorer(Woods*);
 	~Explorer();
 };
 
