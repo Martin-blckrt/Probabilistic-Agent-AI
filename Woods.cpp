@@ -6,8 +6,47 @@ using namespace std;
  * CELL FONCTIONS
  */
 
-Cell::Cell() {
+Cell::Cell(int xc, int yc) {
 
+	setCoords(xc, yc);
+
+	int prob = rand() % 101;
+
+	if (prob < MONSTER_RATE)
+		setMonster(true);
+
+	prob = rand() % 101;
+
+	if (prob < CREV_RATE)
+		setCrevice(true);
+
+	prob = rand() % 101;
+
+	if (prob < PORTAL_RATE)
+		setPortal(true);
+}
+
+void Cell::setCoords(int xc = -1, int yc = -1) {
+
+	if (xc != -1)
+		x = xc;
+
+	if (yc != -1)
+		y = yc;
+}
+
+void Cell::setMonster(bool b){
+	m_monster = b;
+	// stinky logic
+}
+
+void Cell::setCrevice(bool b){
+	m_crevice = b;
+	// windy logic
+}
+
+void Cell::killMonster(){
+	setMonster(false);
 }
 
 /*
@@ -16,7 +55,16 @@ Cell::Cell() {
 
 Woods::Woods(int msize) {
 
-	map = vector<vector<Cell*>>(msize, vector<Cell*>(msize, new Cell()));
+	for (int i = 0; i < msize; i++)
+	{
+		vector<Cell*> v;
+
+		for (int j = 0; j < msize; j++)
+			v.push_back(new Cell(i, j));
+
+		map.push_back(v);
+	}
+
 	mapsize = msize;
 }
 

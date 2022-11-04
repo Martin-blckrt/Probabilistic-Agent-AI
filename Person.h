@@ -11,7 +11,8 @@ private:
 public:
 
 	Person();
-	~Person();
 
 	bool isDead() const { return m_dead; }
+
+	std::map<Cell*, std::pair<int, int>> visited;
 };

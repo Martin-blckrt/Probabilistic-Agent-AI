@@ -6,6 +6,8 @@ class Cell {
 	friend class Woods;
 
 private:
+	int x; int y;
+
 	bool m_monster = false;
 	bool m_stink = false;
 
@@ -16,7 +18,10 @@ private:
 	bool m_exit = false;
 
 public:
-	Cell();
+	Cell(int, int);
+
+	void setCoords(int x, int y);
+	std::pair<int, int> getCoords() { return std::make_pair(x, y); }
 
 	bool hasMonster() const{ return m_monster; };
 	bool hasCrevice() const{ return m_crevice; };
@@ -26,21 +31,11 @@ public:
 	bool isWindy() const{ return m_windy; };
 	bool isExit() const{ return m_exit; };
 
-	void setMonster(bool b){
-		m_monster = b;
-		// smell logic
-	};
+	void setMonster(bool b);
+	void setCrevice(bool b);
+	void setPortal(bool b){ m_portal = b; };
 
-	void setCrevice(bool b){
-		m_crevice = b;
-		// windy logic
-	};
-
-	void setPortal(bool b){
-		m_portal = b;
-	};
-
-	void killMonster(){ setMonster(false); }
+	void killMonster();
 
 	friend std::ostream& operator<<(std::ostream&, const Cell*);
 

@@ -8,6 +8,8 @@ using namespace std;
 
 int main(){
 
+	srand(time(nullptr));
+
 	int msize = INITIAL_MAPSIZE;
 	auto* hobbit = new Person();
 
