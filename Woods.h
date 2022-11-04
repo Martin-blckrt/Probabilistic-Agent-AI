@@ -38,7 +38,6 @@ public:
 
 	void setPortal(bool b){
 		m_portal = b;
-		// is shiny (exit) ? logic
 	};
 
 	void killMonster(){ setMonster(false); }
@@ -49,10 +48,13 @@ public:
 
 class Woods {
 public:
-	Woods();
+
+	int mapsize;
+
+	Woods(int);
 	~Woods();
 
-	static int getMapSize() { return MAPSIZE; };
+	int getMapSize() const { return mapsize; };
 	Cell* getCell(int, int);
 
 	friend std::ostream& operator<<(std::ostream&, const Woods& );

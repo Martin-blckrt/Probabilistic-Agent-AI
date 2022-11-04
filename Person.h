@@ -5,4 +5,13 @@
 
 class Person {
 
+private:
+	bool m_dead = false;
+
+public:
+
+	Person();
+	~Person();
+
+	bool isDead() const { return m_dead; }
 };

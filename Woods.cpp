@@ -14,9 +14,10 @@ Cell::Cell() {
  * WOODS FONCTIONS
  */
 
-Woods::Woods() {
+Woods::Woods(int msize) {
 
-	map = vector<vector<Cell*>>(MAPSIZE, vector<Cell*>(MAPSIZE, new Cell()));
+	map = vector<vector<Cell*>>(msize, vector<Cell*>(msize, new Cell()));
+	mapsize = msize;
 }
 
 Woods::~Woods() {
@@ -28,7 +29,7 @@ Woods::~Woods() {
 
 Cell* Woods::getCell(int x, int y) {
 
-	if ((x >= 0 && x < MAPSIZE) && (y >= 0 && y < MAPSIZE))
+	if ((x >= 0 && x < mapsize) && (y >= 0 && y < mapsize))
 		return map[x][y];
 	else
 		return nullptr;
@@ -59,6 +60,8 @@ std::ostream &operator<<(std::ostream & output, const Cell * c) {
 		else
 			output << "0";
 	}
+
+	return output;
 }
 
 std::ostream &operator<<(std::ostream & output, const Woods & w) {
