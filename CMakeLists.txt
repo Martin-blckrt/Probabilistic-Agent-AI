@@ -7,4 +7,4 @@ include_directories(.)
 
 add_executable(LostInTheWoods
         Woods.cpp
-        Woods.h)
+        Woods.h main.cpp)
