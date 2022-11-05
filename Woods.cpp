@@ -3,63 +3,6 @@
 using namespace std;
 
 /*
- * CELL FONCTIONS
- */
-
-Cell::Cell(int xc, int yc, int ms) {
-
-	msize = ms;
-	x = xc, y = yc;
-	setCoords(xc, yc);
-
-	int prob = rand() % 101;
-
-	if (prob < MONSTER_RATE)
-		setMonster(true);
-
-	prob = rand() % 101;
-
-	if (prob < CREV_RATE)
-		setCrevice(true);
-
-	prob = rand() % 101;
-
-	if (prob < PORTAL_RATE)
-		setPortal(true);
-}
-
-void Cell::setCoords(int xc = -1, int yc = -1) {
-
-	if (xc != -1)
-		x = xc;
-
-	if (yc != -1)
-		y = yc;
-}
-
-void Cell::setMonster(bool b) {
-	m_monster = b;
-	/*std::vector<Cell*> neigh = getNeighbours();
-
-	for (auto cell : neigh) {
-		cell->setStinky(b);
-	}*/
-}
-
-void Cell::setCrevice(bool b) {
-	m_crevice = b;
-	/*std::vector<Cell*> neigh = getNeighbours();
-
-	for (auto cell : neigh) {
-		cell->setWindy(b);
-	}*/
-}
-
-void Cell::killMonster() {
-	setMonster(false);
-}
-
-/*
  * WOODS FONCTIONS
  */
 
@@ -91,33 +34,10 @@ Cell* Woods::getCell(int x, int y) {
 		return nullptr;
 }
 
+
 /*
  * OUTPUT FONCTIONS
  */
-
-std::ostream &operator<<(std::ostream &output, const Cell *c) {
-
-	output << "|";
-
-	if (c != nullptr) {
-		if (c->hasMonster())
-			output << "M";
-		else
-			output << "0";
-
-		if (c->hasCrevice())
-			output << " - C";
-		else
-			output << " - 0";
-
-		if (c->hasPortal())
-			output << "- P";
-		else
-			output << "- 0";
-	}
-
-	return output;
-}
 
 std::ostream &operator<<(std::ostream &output, const Woods &w) {
 
