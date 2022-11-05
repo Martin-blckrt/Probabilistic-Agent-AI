@@ -94,7 +94,7 @@ void Cell::killMonster() {
 	setMonster(false);
 }
 
-std::ostream &operator<<(std::ostream &output, const Cell *c) {
+std::ostream &operator<<(std::ostream &output, Cell *c) {
 
 	output << "|";
 
@@ -115,7 +115,8 @@ std::ostream &operator<<(std::ostream &output, const Cell *c) {
 			output << " - 0";
 	}
 
-	output << " |";
+	if (c->getCoords().second == c->msize - 1)
+		output << " |";
 
 	return output;
 }

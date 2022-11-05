@@ -44,5 +44,5 @@ public:
 
 	void killMonster();
 
-	friend std::ostream& operator<<(std::ostream&, const Cell*);
+	friend std::ostream& operator<<(std::ostream&, Cell*);
 };

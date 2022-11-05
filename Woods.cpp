@@ -42,10 +42,12 @@ Cell* Woods::getCell(int x, int y) {
 std::ostream &operator<<(std::ostream &output, const Woods &w) {
 
 	for (const auto &i: w.map) {
+		cout << " -----------------------------------" << endl;
 		for (auto j: i)
 			output << j << " ";
 		output << endl;
 	}
+	cout << " -----------------------------------" << endl;
 
 	return output;
 }
