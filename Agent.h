@@ -3,14 +3,14 @@
 #include "ProblemData.h"
 #include "Woods.h"
 
-class Person {
+class Agent {
 
 private:
 	bool m_dead = false;
 
 public:
 
-	Person();
+	Agent();
 
 	bool isDead() const { return m_dead; }
 

@@ -2,7 +2,7 @@
 
 #include "ProblemData.h"
 #include "Woods.h"
-#include "Person.h"
+#include "Agent.h"
 
 using namespace std;
 
@@ -11,7 +11,7 @@ int main(){
 	srand(time(nullptr));
 
 	int msize = INITIAL_MAPSIZE;
-	auto* hobbit = new Person();
+	auto* hobbit = new Agent();
 
 	//while (true)
 	//{
