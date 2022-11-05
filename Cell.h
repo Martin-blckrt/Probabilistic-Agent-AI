@@ -4,7 +4,6 @@
 #include "Woods.h"
 
 class Cell {
-	friend class Woods;
 
 private:
 	int x; int y; int msize;
@@ -25,6 +24,8 @@ public:
 
 	void setCoords(int x, int y);
 	std::pair<int, int> getCoords() { return std::make_pair(x, y); }
+
+	void updateAdjCell();
 	std::vector<Cell *> getAdjCell();
 
 	bool hasMonster() const{ return m_monster; };

@@ -36,6 +36,20 @@ void Cell::setCoords(int xc = -1, int yc = -1) {
 	}
 }
 
+void Cell::updateAdjCell() {
+
+	bool b;
+	std::vector<Cell*> neigh = getAdjCell();
+
+	for (auto cell : neigh) {
+		b = hasMonster();
+		cell->setStinky(b);
+
+		b = hasCrevice();
+		cell->setWindy(b);
+	}
+}
+
 std::vector<Cell *> Cell::getAdjCell() {
 
 	std::vector<Cell *> neigh(4);
@@ -58,20 +72,23 @@ std::vector<Cell *> Cell::getAdjCell() {
 
 void Cell::setMonster(bool b) {
 	m_monster = b;
-	std::vector<Cell*> neigh = getAdjCell();
 
-	for (auto cell : neigh) {
-		cell->setStinky(b);
-	}
+	size_t r = (*map).size();
+	size_t c = (*map)[0].size();
+
+	if (r == msize && c == msize)
+		updateAdjCell();
 }
 
 void Cell::setCrevice(bool b) {
 	m_crevice = b;
-	std::vector<Cell*> neigh = getAdjCell();
 
-	for (auto cell : neigh) {
-		cell->setWindy(b);
-	}
+	size_t r = (*map).size();
+	size_t c = (*map)[0].size();
+
+	if (r == msize && c == msize)
+		updateAdjCell();
+
 }
 
 void Cell::killMonster() {
@@ -84,9 +101,9 @@ std::ostream &operator<<(std::ostream &output, const Cell *c) {
 
 	if (c != nullptr) {
 		if (c->hasMonster())
-			output << "M";
+			output << " M";
 		else
-			output << "0";
+			output << " 0";
 
 		if (c->hasCrevice())
 			output << " - C";

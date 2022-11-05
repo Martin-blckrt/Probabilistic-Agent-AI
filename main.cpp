@@ -18,7 +18,7 @@ int main(){
 		auto* sherwood = new Woods(msize);
 
 		cout << "Loading woods of size " << msize << endl;
-		cout << "Woods are : " << endl << sherwood << endl;
+		cout << "Woods are : " << endl << *sherwood << endl;
 
 		// if exit is reached, do these 2 :
 		delete sherwood;

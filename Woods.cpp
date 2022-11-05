@@ -35,7 +35,6 @@ Cell* Woods::getCell(int x, int y) {
 		return nullptr;
 }
 
-
 /*
  * OUTPUT FONCTIONS
  */

@@ -3,6 +3,7 @@
 #include "ProblemData.h"
 #include "Cell.h"
 
+class Cell;
 class Woods {
 public:
 
