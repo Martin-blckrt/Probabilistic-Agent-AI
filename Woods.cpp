@@ -9,11 +9,12 @@ using namespace std;
 Woods::Woods(int msize) {
 
 	mapsize = msize;
-	for (int i = 0; i < msize; i++) {
+
+	for (int i = 0; i < mapsize; i++) {
 		vector<Cell *> v;
 
 		for (int j = 0; j < msize; j++)
-			v.push_back(new Cell(i, j, msize));
+			v.push_back(new Cell(&map, i, j, mapsize));
 
 		map.push_back(v);
 	}
@@ -21,7 +22,7 @@ Woods::Woods(int msize) {
 
 Woods::~Woods() {
 
-	for (auto &i: map)
+	for (const auto& i: map)
 		for (auto &j: i)
 			delete j;
 }

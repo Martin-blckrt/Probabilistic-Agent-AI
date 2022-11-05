@@ -18,10 +18,10 @@ private:
 	bool m_portal = false;
 	bool m_exit = false;
 
-	Woods* woods;
+	std::vector< std::vector<Cell*> > *map;
 
 public:
-	Cell(Woods*, int, int, int);
+	Cell(std::vector< std::vector<Cell*> > *, int, int, int);
 
 	void setCoords(int x, int y);
 	std::pair<int, int> getCoords() { return std::make_pair(x, y); }

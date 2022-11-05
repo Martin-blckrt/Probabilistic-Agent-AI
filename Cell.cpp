@@ -6,11 +6,11 @@ using namespace std;
  * CELL FONCTIONS
  */
 
-Cell::Cell(Woods *w, int xc, int yc, int ms) {
+Cell::Cell(std::vector< std::vector<Cell*> > * m, int xc, int yc, int ms) {
 
 	msize = ms;
 	x = xc, y = yc;
-	woods = w;
+	map = m;
 
 	int prob = rand() % 101;
 
@@ -39,19 +39,18 @@ void Cell::setCoords(int xc = -1, int yc = -1) {
 std::vector<Cell *> Cell::getAdjCell() {
 
 	std::vector<Cell *> neigh(4);
-	auto map = woods->getMap();
 
 	if (x + 1 < msize)
-		neigh.push_back(map[x + 1][y]);
+		neigh.push_back((*map)[x + 1][y]);
 
 	if (x - 1 >= 0)
-		neigh.push_back(map[x - 1][y]);
+		neigh.push_back((*map)[x - 1][y]);
 
 	if (y + 1 < msize)
-		neigh.push_back(map[x][y + 1]);
+		neigh.push_back((*map)[x][y + 1]);
 
 	if (y - 1 >= 0)
-		neigh.push_back(map[x][y - 1]);
+		neigh.push_back((*map)[x][y - 1]);
 
 	neigh.shrink_to_fit();
 	return neigh;
