@@ -8,6 +8,8 @@ using namespace std;
 
 int main(){
 
+	cout << "Probabilistic agent - TP3 " << endl << endl;
+
 	srand(time(nullptr));
 
 	int msize = INITIAL_MAPSIZE;
@@ -18,7 +20,7 @@ int main(){
 		auto* sherwood = new Woods(msize);
 
 		cout << "Loading woods of size " << msize << endl;
-		cout << "Woods are : " << endl << *sherwood << endl;
+		cout << "Current woods : " << endl << *sherwood << endl;
 
 		// if exit is reached, do these 2 :
 		delete sherwood;

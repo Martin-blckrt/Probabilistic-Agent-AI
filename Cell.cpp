@@ -110,10 +110,12 @@ std::ostream &operator<<(std::ostream &output, const Cell *c) {
 			output << " - 0";
 
 		if (c->hasPortal())
-			output << "- P";
+			output << " - P";
 		else
-			output << "- 0";
+			output << " - 0";
 	}
+
+	output << " |";
 
 	return output;
 }
