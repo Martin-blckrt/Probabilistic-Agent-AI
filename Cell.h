@@ -6,7 +6,9 @@
 class Cell {
 
 private:
-	int x; int y; int msize;
+	int x; int y;
+	int msize;
+	int exit_rate = EXIT_RATE;
 
 	bool m_monster = false;
 	bool m_stink = false;
@@ -34,13 +36,17 @@ public:
 
 	bool isStinky() const{ return m_stink; };
 	bool isWindy() const{ return m_windy; };
+	bool isExit() const{ return m_exit; };
 
 	void setMonster(bool b);
 	void setCrevice(bool b);
-	void setPortal(bool b){ m_portal = b; };
+	void setPortal(bool b);
 
 	void setStinky(bool b){ m_stink = b; };
 	void setWindy(bool b){ m_windy = b; };
+
+	bool tryForExit();
+	void setExit(bool b);
 
 	void killMonster();
 

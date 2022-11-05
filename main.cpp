@@ -17,14 +17,14 @@ int main(){
 
 	//while (true)
 	//{
-		auto* sherwood = new Woods(msize);
+	auto* sherwood = new Woods(msize);
 
-		cout << "Loading woods of size " << msize << endl;
-		cout << "Current woods : " << endl << *sherwood << endl;
+	cout << "Loading woods of size " << msize << endl;
+	cout << "Current woods : " << endl << *sherwood << endl;
 
-		// if exit is reached, do these 2 :
-		delete sherwood;
-		msize++;
+	// if exit is reached, do these 2 :
+	delete sherwood;
+	msize++;
 	//}
 
 	return 0;

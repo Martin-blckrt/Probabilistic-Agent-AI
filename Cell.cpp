@@ -90,6 +90,33 @@ void Cell::setCrevice(bool b) {
 		updateAdjCell();
 }
 
+void Cell::setPortal(bool b) {
+	m_portal = b;
+
+	if (b)
+		tryForExit();
+}
+
+bool Cell::tryForExit() {
+
+	bool b = false;
+	int prob = rand() % 101;
+
+	if(prob < exit_rate)
+	{
+		b = true;
+		setExit(true);
+	}
+
+	return b;
+}
+
+void Cell::setExit(bool b) {
+
+	m_exit = b;
+	if(b) exit_rate = 0;
+}
+
 void Cell::killMonster() {
 	setMonster(false);
 }
@@ -109,7 +136,9 @@ std::ostream &operator<<(std::ostream &output, Cell *c) {
 		else
 			output << " - 0";
 
-		if (c->hasPortal())
+		if (c->hasPortal() && c->isExit())
+			output << " - P(S)";
+		else if(c->hasPortal())
 			output << " - P";
 		else
 			output << " - 0";

@@ -13,10 +13,28 @@ Woods::Woods(int msize) {
 	for (int i = 0; i < mapsize; i++) {
 		vector<Cell *> v;
 
-		for (int j = 0; j < msize; j++)
-			v.push_back(new Cell(&map, i, j, mapsize));
+		for (int j = 0; j < msize; j++){
+			auto c = new Cell(&map, i, j, mapsize);
+
+			if(c->isExit())
+				setExit(true);
+
+			v.push_back(c);
+		}
 
 		map.push_back(v);
+	}
+
+	while (!hasExit()){
+
+		for (const auto& r : map) {
+			for(auto c : r){
+
+				if (c->hasPortal())
+					if (c->tryForExit())
+						setExit(true);
+			}
+		}
 	}
 }
 

@@ -12,7 +12,8 @@
 
 #define MONSTER_RATE 60
 #define CREV_RATE 20
-#define PORTAL_RATE 40
+#define PORTAL_RATE 30
+#define EXIT_RATE 30
 
 #define EXIT_FOUND 10
 #define DEATH (-10)
