@@ -74,7 +74,7 @@ void Cell::setMonster(bool b) {
 	m_monster = b;
 
 	size_t r = (*map).size();
-	size_t c = (*map)[0].size();
+	size_t c = r != 0 ? (*map)[0].size() : 0;
 
 	if (r == msize && c == msize)
 		updateAdjCell();
@@ -84,11 +84,10 @@ void Cell::setCrevice(bool b) {
 	m_crevice = b;
 
 	size_t r = (*map).size();
-	size_t c = (*map)[0].size();
+	size_t c = r != 0 ? (*map)[0].size() : 0;
 
 	if (r == msize && c == msize)
 		updateAdjCell();
-
 }
 
 void Cell::killMonster() {
