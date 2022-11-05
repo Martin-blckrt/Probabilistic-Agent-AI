@@ -21,7 +21,7 @@ private:
 	Woods* woods;
 
 public:
-	Cell(int, int, int);
+	Cell(Woods*, int, int, int);
 
 	void setCoords(int x, int y);
 	std::pair<int, int> getCoords() { return std::make_pair(x, y); }

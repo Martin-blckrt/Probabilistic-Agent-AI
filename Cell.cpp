@@ -6,11 +6,11 @@ using namespace std;
  * CELL FONCTIONS
  */
 
-Cell::Cell(int xc, int yc, int ms) {
+Cell::Cell(Woods *w, int xc, int yc, int ms) {
 
 	msize = ms;
 	x = xc, y = yc;
-	setCoords(xc, yc);
+	woods = w;
 
 	int prob = rand() % 101;
 
@@ -30,34 +30,49 @@ Cell::Cell(int xc, int yc, int ms) {
 
 void Cell::setCoords(int xc = -1, int yc = -1) {
 
-	if (xc != -1 && yc != -1){
+	if (xc != -1 && yc != -1) {
 		x = xc;
 		y = yc;
 	}
 }
 
-std::vector<Cell *> getAdjCell(){
+std::vector<Cell *> Cell::getAdjCell() {
 
-	
+	std::vector<Cell *> neigh(4);
+	auto map = woods->getMap();
 
+	if (x + 1 < msize)
+		neigh.push_back(map[x + 1][y]);
+
+	if (x - 1 >= 0)
+		neigh.push_back(map[x - 1][y]);
+
+	if (y + 1 < msize)
+		neigh.push_back(map[x][y + 1]);
+
+	if (y - 1 >= 0)
+		neigh.push_back(map[x][y - 1]);
+
+	neigh.shrink_to_fit();
+	return neigh;
 }
 
 void Cell::setMonster(bool b) {
 	m_monster = b;
-	/*std::vector<Cell*> neigh = getNeighbours();
+	std::vector<Cell*> neigh = getAdjCell();
 
 	for (auto cell : neigh) {
 		cell->setStinky(b);
-	}*/
+	}
 }
 
 void Cell::setCrevice(bool b) {
 	m_crevice = b;
-	/*std::vector<Cell*> neigh = getNeighbours();
+	std::vector<Cell*> neigh = getAdjCell();
 
 	for (auto cell : neigh) {
 		cell->setWindy(b);
-	}*/
+	}
 }
 
 void Cell::killMonster() {

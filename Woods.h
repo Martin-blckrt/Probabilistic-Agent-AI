@@ -13,10 +13,11 @@ public:
 
 	int getMapSize() const { return mapsize; };
 	Cell* getCell(int, int);
+	std::vector< std::vector<Cell*> > * getMap(){ return map; };
 
 	friend std::ostream& operator<<(std::ostream&, const Woods& );
 
 private:
-	std::vector< std::vector<Cell*> > map;
+	std::vector< std::vector<Cell*> > *map;
 };
 
