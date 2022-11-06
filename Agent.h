@@ -13,13 +13,14 @@ private:
 	Sensor * sens;
 	Effector * eff;
 
-	Map * map;
+	Woods * woods;
 
 public:
 
-	Agent();
+	explicit Agent(Woods * w = nullptr);
+	~Agent();
 
-	bool isDead() const { return m_dead; }
+	bool isDead();
 	void move();
 
 	std::map<Cell*, std::pair<int, int>> visited;

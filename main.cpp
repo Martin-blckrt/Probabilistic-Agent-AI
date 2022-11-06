@@ -24,12 +24,13 @@ int main(){
 
 		if (!hobbit->isDead())
 		{
-
+			// main stuff
 		}
 
 		// if exit is reached, do these 2 :
 		delete sherwood;
 		msize++;
+		break;
 	}
 
 	return 0;

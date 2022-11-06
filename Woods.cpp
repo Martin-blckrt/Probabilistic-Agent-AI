@@ -10,11 +10,18 @@ Woods::Woods(int msize) {
 
 	mapsize = msize;
 
+	int probX = rand() % mapsize;
+	int probY = rand() % mapsize;
+
 	for (int i = 0; i < mapsize; i++) {
 		vector<Cell *> v;
 
 		for (int j = 0; j < msize; j++){
-			auto c = new Cell(&map, i, j, mapsize);
+
+			bool agentHere = probX == i && probY == j;
+			bool forcedPortal = !hasExit() && (i == mapsize - 1 && j == mapsize - 1);
+
+			auto c = new Cell(&map, i, j, mapsize, agentHere, forcedPortal);
 
 			if(c->isExit())
 				setExit(true);
@@ -25,16 +32,23 @@ Woods::Woods(int msize) {
 		map.push_back(v);
 	}
 
-	while (!hasExit()){
+	bool cellUpdated = false, exit_created = false;
+
+	while (!hasExit() || !cellUpdated){
 
 		for (const auto& r : map) {
 			for(auto c : r){
 
-				if (c->hasPortal())
+				c->updateAdjCell();
+
+				if (c->hasPortal() && !exit_created)
 					if (c->tryForExit())
-						setExit(true);
+						exit_created = true;
+
 			}
 		}
+
+		cellUpdated = true;
 	}
 }
 
@@ -60,12 +74,12 @@ Cell* Woods::getCell(int x, int y) {
 std::ostream &operator<<(std::ostream &output, const Woods &w) {
 
 	for (const auto &i: w.map) {
-		cout << " -----------------------------------" << endl;
+		cout << " ------------------------------------------------------------" << endl;
 		for (auto j: i)
 			output << j << " ";
 		output << endl;
 	}
-	cout << " -----------------------------------" << endl;
+	cout << " ------------------------------------------------------------" << endl;
 
 	return output;
 }

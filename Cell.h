@@ -10,6 +10,7 @@ private:
 	int msize;
 	int exit_rate = EXIT_RATE;
 
+	bool m_agent = false;
 	bool m_monster = false;
 	bool m_stink = false;
 
@@ -22,7 +23,7 @@ private:
 	std::vector< std::vector<Cell*> > *map;
 
 public:
-	Cell(std::vector< std::vector<Cell*> > *, int, int, int);
+	Cell(std::vector< std::vector<Cell*> > *, int, int, int, bool, bool);
 
 	void setCoords(int x, int y);
 	std::pair<int, int> getCoords() { return std::make_pair(x, y); }
@@ -30,6 +31,7 @@ public:
 	void updateAdjCell();
 	std::vector<Cell *> getAdjCell();
 
+	bool hasAgent() const{ return m_agent; };
 	bool hasMonster() const{ return m_monster; };
 	bool hasCrevice() const{ return m_crevice; };
 	bool hasPortal() const{ return m_portal; };
@@ -38,6 +40,7 @@ public:
 	bool isWindy() const{ return m_windy; };
 	bool isExit() const{ return m_exit; };
 
+	void setAgent(bool b) { m_agent = b; };
 	void setMonster(bool b);
 	void setCrevice(bool b);
 	void setPortal(bool b);

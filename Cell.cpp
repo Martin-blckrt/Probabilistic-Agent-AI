@@ -6,26 +6,45 @@ using namespace std;
  * CELL FONCTIONS
  */
 
-Cell::Cell(std::vector< std::vector<Cell*> > * m, int xc, int yc, int ms) {
+Cell::Cell(std::vector< std::vector<Cell*> > * m, int xc, int yc, int ms, bool agent, bool forcedPortal) {
 
 	msize = ms;
 	x = xc, y = yc;
 	map = m;
 
+	bool smgSpawned = false;
+
+	if (agent)
+	{
+		setAgent(true);
+		return;
+	}
+
+	if (forcedPortal){
+		setPortal(true);
+		return;
+	}
+
 	int prob = rand() % 101;
 
-	if (prob < MONSTER_RATE)
+	if (prob < MONSTER_RATE){
 		setMonster(true);
+		smgSpawned = true;
+	}
 
 	prob = rand() % 101;
-
-	if (prob < CREV_RATE)
+	if (prob < CREV_RATE && !smgSpawned)
+	{
 		setCrevice(true);
+		smgSpawned = true;
+	}
 
 	prob = rand() % 101;
-
-	if (prob < PORTAL_RATE)
+	if (prob < PORTAL_RATE && !smgSpawned)
+	{
 		setPortal(true);
+		// useless : smgSpawned = true;
+	}
 }
 
 void Cell::setCoords(int xc = -1, int yc = -1) {
@@ -38,21 +57,20 @@ void Cell::setCoords(int xc = -1, int yc = -1) {
 
 void Cell::updateAdjCell() {
 
-	bool b;
+	bool bm = hasMonster(), bc = hasCrevice();
+
 	std::vector<Cell*> neigh = getAdjCell();
 
 	for (auto cell : neigh) {
-		b = hasMonster();
-		cell->setStinky(b);
 
-		b = hasCrevice();
-		cell->setWindy(b);
+		cell->setStinky(bm);
+		cell->setWindy(bc);
 	}
 }
 
 std::vector<Cell *> Cell::getAdjCell() {
 
-	std::vector<Cell *> neigh(4);
+	std::vector<Cell *> neigh;
 
 	if (x + 1 < msize)
 		neigh.push_back((*map)[x + 1][y]);
@@ -76,6 +94,8 @@ void Cell::setMonster(bool b) {
 	size_t r = (*map).size();
 	size_t c = r != 0 ? (*map)[0].size() : 0;
 
+	setStinky(b);
+
 	if (r == msize && c == msize)
 		updateAdjCell();
 }
@@ -85,6 +105,8 @@ void Cell::setCrevice(bool b) {
 
 	size_t r = (*map).size();
 	size_t c = r != 0 ? (*map)[0].size() : 0;
+
+	setStinky(b);
 
 	if (r == msize && c == msize)
 		updateAdjCell();
@@ -101,7 +123,7 @@ bool Cell::tryForExit() {
 
 	bool b = false;
 	int prob = rand() % 101;
-
+	
 	if(prob < exit_rate)
 	{
 		b = true;
@@ -137,11 +159,26 @@ std::ostream &operator<<(std::ostream &output, Cell *c) {
 			output << " - 0";
 
 		if (c->hasPortal() && c->isExit())
-			output << " - P(S)";
+			output << " - EP";
 		else if(c->hasPortal())
-			output << " - P";
+			output << " - NP";
+		else
+			output << " - 0 ";
+
+		if (c->hasAgent())
+			output << " - A";
 		else
 			output << " - 0";
+
+		output << " (";
+
+		if (c->isStinky())
+			output << "S";
+
+		if (c->isWindy())
+			output << "W";
+
+		output << ")";
 	}
 
 	if (c->getCoords().second == c->msize - 1)
