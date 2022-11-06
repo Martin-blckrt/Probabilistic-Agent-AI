@@ -106,7 +106,7 @@ void Cell::setCrevice(bool b) {
 	size_t r = (*map).size();
 	size_t c = r != 0 ? (*map)[0].size() : 0;
 
-	setStinky(b);
+	setWindy(b);
 
 	if (r == msize && c == msize)
 		updateAdjCell();

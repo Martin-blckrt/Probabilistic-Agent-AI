@@ -39,12 +39,13 @@ Woods::Woods(int msize) {
 		for (const auto& r : map) {
 			for(auto c : r){
 
-				c->updateAdjCell();
-
 				if (c->hasPortal() && !exit_created)
-					if (c->tryForExit())
+					if (c->tryForExit()){
+						setExit(true);
 						exit_created = true;
+					}
 
+				c->updateAdjCell();
 			}
 		}
 

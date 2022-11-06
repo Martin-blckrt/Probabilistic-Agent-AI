@@ -13,7 +13,7 @@ public:
 	}
 
 	Cell* locateAgent() {
-		return woods->getAgent();
+		return woods->getAgentCell();
 	}
 };
 
