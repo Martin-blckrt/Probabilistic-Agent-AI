@@ -83,3 +83,10 @@ std::ostream &operator<<(std::ostream &output, const Woods &w) {
 
 	return output;
 }
+
+Cell *Woods::getAgentCell() {
+	for(const auto& r : map)
+		for(auto c : r)
+			if (c->hasAgent())
+				return c;
+}

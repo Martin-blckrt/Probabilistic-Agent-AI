@@ -123,7 +123,7 @@ bool Cell::tryForExit() {
 
 	bool b = false;
 	int prob = rand() % 101;
-	
+
 	if(prob < exit_rate)
 	{
 		b = true;

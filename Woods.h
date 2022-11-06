@@ -16,7 +16,7 @@ public:
 	int getMapSize() const { return mapsize; };
 	Cell* getCell(int, int);
 	std::vector< std::vector<Cell*> > * getMap(){ return &map; };
-	Cell* getAgent();
+	Cell* getAgentCell();
 
 	void setExit(bool b) { exitable = b; }
 	bool hasExit() const { return exitable; }
