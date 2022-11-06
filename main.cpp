@@ -15,17 +15,22 @@ int main(){
 	int msize = INITIAL_MAPSIZE;
 	auto* hobbit = new Agent();
 
-	//while (true)
-	//{
-	auto* sherwood = new Woods(msize);
+	while (true)
+	{
+		auto* sherwood = new Woods(msize);
 
-	cout << "Loading woods of size " << msize << endl;
-	cout << "Current woods : " << endl << *sherwood << endl;
+		cout << "Loading woods of size " << msize << endl;
+		cout << "Current woods : " << endl << *sherwood << endl;
 
-	// if exit is reached, do these 2 :
-	delete sherwood;
-	msize++;
-	//}
+		if (!hobbit->isDead())
+		{
+
+		}
+
+		// if exit is reached, do these 2 :
+		delete sherwood;
+		msize++;
+	}
 
 	return 0;
 }

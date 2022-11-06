@@ -4,3 +4,7 @@ Agent::Agent() {
 
 }
 
+void Agent::move() {
+
+}
+

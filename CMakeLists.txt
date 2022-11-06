@@ -6,4 +6,4 @@ set(CMAKE_CXX_STANDARD 14)
 include_directories(.)
 
 add_executable(LostInTheWoods Cell.cpp Cell.h
-        Woods.cpp Woods.h ProblemData.h Agent.cpp Agent.h bayes.h   main.cpp)
+        Woods.cpp Woods.h ProblemData.h Agent.cpp Agent.h bayes.h   main.cpp Sensor.h Effector.h)
