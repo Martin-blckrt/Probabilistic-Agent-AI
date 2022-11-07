@@ -57,7 +57,7 @@ void Cell::updateAdjCell() {
 
 	bool bm = hasMonster(), bc = hasCrevice();
 
-	std::vector<Cell*> neigh = getAdjCell();
+	vector<Cell*> neigh = getAdjCell();
 
 	for (auto& cell : neigh) {
 
@@ -69,10 +69,10 @@ void Cell::updateAdjCell() {
 	}
 }
 
-std::vector<Cell *> Cell::getAdjCell() {
+vector<Cell *> Cell::getAdjCell() {
 
 	auto map = *woods->getMap();
-	std::vector<Cell *> neigh;
+	vector<Cell *> neigh;
 
 	if (x + 1 < msize)
 		neigh.push_back(map[x + 1][y]);
@@ -136,9 +136,29 @@ void Cell::reduceExitRate() {
 
 void Cell::killMonster() {
 	setMonster(false);
+
+	vector<Cell*> neigh = getAdjCell();
+
+	for (auto& cell : neigh) {
+
+		vector<Cell*> cell_neigh = getAdjCell();
+
+		bool monsterNear = false;
+		for (auto& cn : cell_neigh){
+			if (cn->hasMonster()){
+				monsterNear = true;
+				break;
+			}
+		}
+
+		if (!monsterNear)
+			cell->setStinky(false);
+	}
+
+
 }
 
-std::ostream &operator<<(std::ostream &output, Cell *c) {
+ostream &operator<<(ostream &output, Cell *c) {
 
 	output << "|";
 

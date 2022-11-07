@@ -51,7 +51,6 @@ Woods::Woods(int msize) {
 		}
 	}
 
-	cout << "damn" << endl;
 	refreshMap();
 }
 
@@ -82,7 +81,7 @@ Cell* Woods::getCell(int x, int y) {
  * OUTPUT FONCTIONS
  */
 
-std::ostream &operator<<(std::ostream &output, const Woods &w) {
+ostream &operator<<(ostream &output, const Woods &w) {
 
 	for (const auto &i: w.map) {
 		cout << " ------------------------------------------------------------" << endl;
