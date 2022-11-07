@@ -57,9 +57,6 @@ void Cell::updateAdjCell() {
 
 	bool bm = hasMonster(), bc = hasCrevice();
 
-	setStinky(bm);
-	setWindy(bc);
-
 	std::vector<Cell*> neigh = getAdjCell();
 
 	for (auto& cell : neigh) {
@@ -95,10 +92,12 @@ std::vector<Cell *> Cell::getAdjCell() {
 
 void Cell::setMonster(bool b) {
 	m_monster = b;
+	setStinky(b);
 }
 
 void Cell::setCrevice(bool b) {
 	m_crevice = b;
+	setWindy(b);
 }
 
 void Cell::setPortal(bool b) {
