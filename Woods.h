@@ -14,6 +14,8 @@ public:
 	~Woods();
 
 	int getMapSize() const { return mapsize; };
+	void refreshMap();
+
 	Cell* getCell(int, int);
 	std::vector< std::vector<Cell*> > * getMap(){ return &map; };
 	Cell* getAgentCell();

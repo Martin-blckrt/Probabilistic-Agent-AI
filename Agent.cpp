@@ -16,8 +16,8 @@ Agent::~Agent() {
 	delete sens;
 }
 
-bool Agent::isDead() {
-	return false;
+bool Agent::isDead() const {
+	return m_dead;
 }
 
 

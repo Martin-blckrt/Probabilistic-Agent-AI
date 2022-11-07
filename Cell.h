@@ -3,6 +3,7 @@
 #include "ProblemData.h"
 #include "Woods.h"
 
+class Woods;
 class Cell {
 
 private:
@@ -20,10 +21,10 @@ private:
 	bool m_portal = false;
 	bool m_exit = false;
 
-	std::vector< std::vector<Cell*> > *map;
+	Woods * woods;
 
 public:
-	Cell(std::vector< std::vector<Cell*> > *, int, int, int, bool, bool);
+	Cell(Woods*, int, int, bool, bool);
 
 	void setCoords(int x, int y);
 	std::pair<int, int> getCoords() { return std::make_pair(x, y); }
@@ -50,6 +51,7 @@ public:
 
 	bool tryForExit();
 	void setExit(bool b);
+	void reduceExitRate();
 
 	void killMonster();
 

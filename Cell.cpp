@@ -6,16 +6,15 @@ using namespace std;
  * CELL FONCTIONS
  */
 
-Cell::Cell(std::vector< std::vector<Cell*> > * m, int xc, int yc, int ms, bool agent, bool forcedPortal) {
+Cell::Cell(Woods *w, int xc, int yc, bool agent, bool forcedPortal) {
 
-	msize = ms;
 	x = xc, y = yc;
-	map = m;
+	woods = w;
+	msize = woods->mapsize;
 
 	bool smgSpawned = false;
 
-	if (agent)
-	{
+	if (agent){
 		setAgent(true);
 		return;
 	}
@@ -43,7 +42,6 @@ Cell::Cell(std::vector< std::vector<Cell*> > * m, int xc, int yc, int ms, bool a
 	if (prob < PORTAL_RATE && !smgSpawned)
 	{
 		setPortal(true);
-		// useless : smgSpawned = true;
 	}
 }
 
@@ -59,30 +57,37 @@ void Cell::updateAdjCell() {
 
 	bool bm = hasMonster(), bc = hasCrevice();
 
+	setStinky(bm);
+	setWindy(bc);
+
 	std::vector<Cell*> neigh = getAdjCell();
 
-	for (auto cell : neigh) {
+	for (auto& cell : neigh) {
 
-		cell->setStinky(bm);
-		cell->setWindy(bc);
+		if (bm)
+			cell->setStinky(bm);
+
+		if (bc)
+			cell->setWindy(bc);
 	}
 }
 
 std::vector<Cell *> Cell::getAdjCell() {
 
+	auto map = *woods->getMap();
 	std::vector<Cell *> neigh;
 
 	if (x + 1 < msize)
-		neigh.push_back((*map)[x + 1][y]);
+		neigh.push_back(map[x + 1][y]);
 
 	if (x - 1 >= 0)
-		neigh.push_back((*map)[x - 1][y]);
+		neigh.push_back(map[x - 1][y]);
 
 	if (y + 1 < msize)
-		neigh.push_back((*map)[x][y + 1]);
+		neigh.push_back(map[x][y + 1]);
 
 	if (y - 1 >= 0)
-		neigh.push_back((*map)[x][y - 1]);
+		neigh.push_back(map[x][y - 1]);
 
 	neigh.shrink_to_fit();
 	return neigh;
@@ -90,26 +95,10 @@ std::vector<Cell *> Cell::getAdjCell() {
 
 void Cell::setMonster(bool b) {
 	m_monster = b;
-
-	size_t r = (*map).size();
-	size_t c = r != 0 ? (*map)[0].size() : 0;
-
-	setStinky(b);
-
-	if (r == msize && c == msize)
-		updateAdjCell();
 }
 
 void Cell::setCrevice(bool b) {
 	m_crevice = b;
-
-	size_t r = (*map).size();
-	size_t c = r != 0 ? (*map)[0].size() : 0;
-
-	setWindy(b);
-
-	if (r == msize && c == msize)
-		updateAdjCell();
 }
 
 void Cell::setPortal(bool b) {
@@ -136,7 +125,14 @@ bool Cell::tryForExit() {
 void Cell::setExit(bool b) {
 
 	m_exit = b;
-	if(b) exit_rate = 0;
+	if(b) reduceExitRate();
+}
+
+void Cell::reduceExitRate() {
+
+	for (const auto& r : *woods->getMap())
+		for(auto c : r)
+			c->exit_rate = 0;
 }
 
 void Cell::killMonster() {

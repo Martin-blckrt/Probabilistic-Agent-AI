@@ -20,7 +20,7 @@ public:
 	explicit Agent(Woods * w = nullptr);
 	~Agent();
 
-	bool isDead();
+	bool isDead() const;
 	void move();
 
 	std::map<Cell*, std::pair<int, int>> visited;

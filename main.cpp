@@ -13,14 +13,14 @@ int main(){
 	srand(time(nullptr));
 
 	int msize = INITIAL_MAPSIZE;
-	auto* hobbit = new Agent();
 
 	while (true)
 	{
 		auto* sherwood = new Woods(msize);
+		auto* hobbit = new Agent(sherwood);
 
-		cout << "Loading woods of size " << msize << endl;
-		cout << "Current woods : " << endl << *sherwood << endl;
+		cout << "The woods are growing " << "(" << msize << "x" << msize << ")" << endl;
+		cout << *sherwood << endl;
 
 		if (!hobbit->isDead())
 		{
@@ -28,7 +28,9 @@ int main(){
 		}
 
 		// if exit is reached, do these 2 :
+		delete hobbit;
 		delete sherwood;
+
 		msize++;
 		break;
 	}

@@ -21,7 +21,10 @@ Woods::Woods(int msize) {
 			bool agentHere = probX == i && probY == j;
 			bool forcedPortal = !hasExit() && (i == mapsize - 1 && j == mapsize - 1);
 
-			auto c = new Cell(&map, i, j, mapsize, agentHere, forcedPortal);
+			auto c = new Cell(this, i, j, agentHere, forcedPortal);
+
+			if (agentHere)
+				agentPosition = c;
 
 			if(c->isExit())
 				setExit(true);
@@ -32,9 +35,9 @@ Woods::Woods(int msize) {
 		map.push_back(v);
 	}
 
-	bool cellUpdated = false, exit_created = false;
+	bool exit_created = false;
 
-	while (!hasExit() || !cellUpdated){
+	while (!hasExit()){
 
 		for (const auto& r : map) {
 			for(auto c : r){
@@ -44,13 +47,12 @@ Woods::Woods(int msize) {
 						setExit(true);
 						exit_created = true;
 					}
-
-				c->updateAdjCell();
 			}
 		}
-
-		cellUpdated = true;
 	}
+
+	cout << "damn" << endl;
+	refreshMap();
 }
 
 Woods::~Woods() {
@@ -58,6 +60,14 @@ Woods::~Woods() {
 	for (const auto& i: map)
 		for (auto &j: i)
 			delete j;
+}
+
+void Woods::refreshMap() {
+
+	for (auto& r : map)
+		for (auto& c : r)
+			c->updateAdjCell();
+
 }
 
 Cell* Woods::getCell(int x, int y) {
@@ -86,8 +96,13 @@ std::ostream &operator<<(std::ostream &output, const Woods &w) {
 }
 
 Cell *Woods::getAgentCell() {
+
+	Cell* agentCell = nullptr;
+
 	for(const auto& r : map)
 		for(auto c : r)
 			if (c->hasAgent())
-				return c;
+				agentCell = c;
+
+	return agentCell;
 }
