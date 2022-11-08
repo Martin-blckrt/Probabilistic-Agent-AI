@@ -94,6 +94,13 @@ ostream &operator<<(ostream &output, const Woods &w) {
 	return output;
 }
 
+void Woods::setAgentCell(Cell * c) {
+
+	agentPosition->setAgent(false);
+	agentPosition = c;
+	agentPosition->setAgent(true);
+}
+
 Cell *Woods::getAgentCell() {
 
 	Cell* agentCell = nullptr;

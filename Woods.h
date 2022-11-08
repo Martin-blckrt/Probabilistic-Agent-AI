@@ -18,6 +18,8 @@ public:
 
 	Cell* getCell(int, int);
 	std::vector< std::vector<Cell*> > * getMap(){ return &map; };
+
+	void setAgentCell(Cell * c);
 	Cell* getAgentCell();
 
 	void setExit(bool b) { exitable = b; }

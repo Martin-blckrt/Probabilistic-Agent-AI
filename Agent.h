@@ -13,6 +13,13 @@ private:
 	Sensor * sens;
 	Effector * eff;
 
+	int performance = 0;
+
+	int deathCount = 0;
+	int rockUsed = 0;
+	int movesMade = 0;
+	int exitFound = 0;
+
 	Woods * woods;
 
 public:
@@ -21,7 +28,8 @@ public:
 	~Agent();
 
 	bool isDead() const;
-	void move();
+	void throwRock();
+	void makeMove();
 
 	std::map<Cell*, std::pair<int, int>> visited;
 };

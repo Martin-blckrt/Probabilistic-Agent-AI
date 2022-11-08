@@ -20,5 +20,30 @@ bool Agent::isDead() const {
 	return m_dead;
 }
 
+void Agent::throwRock(){
+
+	// decide if we kill
+
+	eff->throwRock(nullptr);
+	performance += Actions::rock;
+}
+
+void Agent::makeMove() {
+
+	// decide which cell
+
+	//send chosen cell
+	Actions curr_action = eff->moveAgent(nullptr);
+
+	if(curr_action == Actions::death)
+		performance += curr_action;
+
+	if(curr_action == Actions::exited)
+		performance += curr_action;
+
+	performance += Actions::move;
+
+}
+
 
 

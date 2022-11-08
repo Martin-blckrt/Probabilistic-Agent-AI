@@ -13,8 +13,21 @@ public:
 		woods = w;
 	}
 
-	void move() {
+	void throwRock(Cell * c){
+		c->killMonster();
+	}
 
+	Actions moveAgent(Cell * c) {
+
+		// give cell to map to update agent pos
+		woods->setAgentCell(c);
+
+		// check cell to know how to update perf
+		if (c->hasCrevice() || c->hasMonster())
+			return Actions::death;
+
+		if (c->hasPortal() && c->isExit())
+			return Actions::exited;
 	}
 };
 
