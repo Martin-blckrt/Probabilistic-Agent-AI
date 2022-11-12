@@ -15,5 +15,13 @@ public:
 	Cell* locateAgent() {
 		return woods->getAgentCell();
 	}
+
+    bool feelWind(Cell* cell) {
+        return cell->isWindy();
+    }
+
+    bool smellStink(Cell* cell) {
+        return cell->isStinky();
+    }
 };
 

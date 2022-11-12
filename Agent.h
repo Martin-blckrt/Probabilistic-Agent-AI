@@ -31,6 +31,10 @@ public:
 	void dies(bool b);
 	void throwRock();
 	void makeMove();
+    bool isVisited(Cell*);
+    double computeCellSafeProb(Cell*);
+    Cell* chooseNextCell();
 
-	std::map<Cell*, std::pair<int, int>> visited;
+	std::vector<Cell*> visited;
+    std::vector<Cell*> frontier;
 };
