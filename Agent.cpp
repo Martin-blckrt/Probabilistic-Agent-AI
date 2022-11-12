@@ -31,11 +31,9 @@ void Agent::dies(bool b) {
 	}
 }
 
-void Agent::throwRock(){
+void Agent::throwRock(Cell* cell){
 
-	// decide if we kill
-
-	eff->throwRock(nullptr);
+	eff->throwRock(cell);
 	performance += Actions::rock;
 }
 
@@ -45,21 +43,8 @@ bool Agent::isVisited(Cell* cell) {
 }
 
 double Agent::computeCellSafeProb(Cell* cell) {
-    int stinkCount = 0;
-    int windCount = 0;
-    bool hasMonster = false;
-    bool hasCrevice = false;
-    vector<Cell*> neigh = cell->getAdjCell();
-    for (auto n : neigh) {
-        if (isVisited(n)) {
-            if (n->isStinky())
-                stinkCount++;
-            if (n->isWindy())
-                windCount++;
-        }
-    }
-    double monster_prob = (MONSTER_RATE/100)*stinkCount;
-    double crev_prob = (CREV_RATE/100)*windCount;
+    double monster_prob = computeMonsterProb(cell);
+    double crev_prob = computeCreviceProb(cell);
     return (1-monster_prob) * (1-crev_prob);
 }
 
@@ -74,6 +59,19 @@ double Agent::computeCreviceProb(Cell* cell) {
     }
     double crev_prob = (CREV_RATE/100)*windCount;
     return crev_prob;
+}
+
+double Agent::computeMonsterProb(Cell* cell) {
+    int stinkCount = 0;
+    vector<Cell*> neigh = cell->getAdjCell();
+    for (auto n : neigh) {
+        if (isVisited(n)) {
+            if (n->isStinky())
+                stinkCount++;
+        }
+    }
+    double monster_prob = (MONSTER_RATE/100)*stinkCount;
+    return monster_prob;
 }
 
 Cell* Agent::chooseNextCell() {
@@ -94,6 +92,9 @@ void Agent::makeMove() {
     // decide which cell
     Cell *cell = chooseNextCell();
 
+    if (computeMonsterProb(cell) > ROCK_THRESHOLD)
+        throwRock(cell);
+
     //send chosen cell
     Actions curr_action = eff->moveAgent(cell);
 
@@ -112,7 +113,6 @@ void Agent::makeMove() {
             if (!isVisited(n))
                 frontier.push_back(n);
     }
-
     performance += Actions::move;
 }
 

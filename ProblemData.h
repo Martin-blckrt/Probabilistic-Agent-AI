@@ -20,4 +20,6 @@
 #define DEATH (-10)
 #define ROCK_COST (-10)
 
+#define ROCK_THRESHOLD 0.4
+
 enum Actions {move = MOVE_COST, exited = EXIT_FOUND, death= DEATH, rock = ROCK_COST};

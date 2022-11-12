@@ -29,11 +29,12 @@ public:
 
 	bool isDead() const;
 	void dies(bool b);
-	void throwRock();
+	void throwRock(Cell*);
 	void makeMove();
     bool isVisited(Cell*);
     double computeCellSafeProb(Cell*);
     double computeCreviceProb(Cell*);
+    double computeMonsterProb(Cell*);
     Cell* chooseNextCell();
 
 	std::vector<Cell*> visited;
