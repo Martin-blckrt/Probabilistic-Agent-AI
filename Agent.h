@@ -19,7 +19,7 @@ private:
 	int rockUsed = 0;
 	int movesMade = 0;
 	int exitFound = 0;
-	
+
 	Woods * woods;
 
 public:
@@ -28,6 +28,7 @@ public:
 	~Agent();
 
 	bool isDead() const;
+	void dies(bool b);
 	void throwRock();
 	void makeMove();
 

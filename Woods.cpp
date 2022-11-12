@@ -7,7 +7,10 @@ using namespace std;
  */
 
 Woods::Woods(int msize) {
+	generateMap(msize);
+}
 
+void Woods::generateMap(int msize) {
 	mapsize = msize;
 
 	int probX = rand() % mapsize;
@@ -55,6 +58,11 @@ Woods::Woods(int msize) {
 }
 
 Woods::~Woods() {
+
+	destroyMap();
+}
+
+void Woods::destroyMap() {
 
 	for (const auto& i: map)
 		for (auto &j: i)
@@ -111,4 +119,9 @@ Cell *Woods::getAgentCell() {
 				agentCell = c;
 
 	return agentCell;
+}
+
+void Woods::agentRespawn() {
+	destroyMap();
+	generateMap(getMapSize());
 }

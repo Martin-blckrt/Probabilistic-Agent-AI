@@ -20,6 +20,16 @@ bool Agent::isDead() const {
 	return m_dead;
 }
 
+void Agent::dies(bool b) {
+	m_dead = b;
+
+	if(b)
+	{
+		visited.clear();
+		woods->agentRespawn();
+	}
+}
+
 void Agent::throwRock(){
 
 	// decide if we kill
@@ -35,8 +45,10 @@ void Agent::makeMove() {
 	//send chosen cell
 	Actions curr_action = eff->moveAgent(nullptr);
 
-	if(curr_action == Actions::death)
+	if(curr_action == Actions::death) {
+
 		performance += curr_action;
+	}
 
 	if(curr_action == Actions::exited)
 		performance += curr_action;
