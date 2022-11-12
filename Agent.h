@@ -33,6 +33,7 @@ public:
 	void makeMove();
     bool isVisited(Cell*);
     double computeCellSafeProb(Cell*);
+    double computeCreviceProb(Cell*);
     Cell* chooseNextCell();
 
 	std::vector<Cell*> visited;

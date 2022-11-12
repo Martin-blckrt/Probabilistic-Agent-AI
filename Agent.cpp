@@ -58,6 +58,22 @@ double Agent::computeCellSafeProb(Cell* cell) {
                 windCount++;
         }
     }
+    double monster_prob = (MONSTER_RATE/100)*stinkCount;
+    double crev_prob = (CREV_RATE/100)*windCount;
+    return (1-monster_prob) * (1-crev_prob);
+}
+
+double Agent::computeCreviceProb(Cell* cell) {
+    int windCount = 0;
+    vector<Cell*> neigh = cell->getAdjCell();
+    for (auto n : neigh) {
+        if (isVisited(n)) {
+            if (n->isWindy())
+                windCount++;
+        }
+    }
+    double crev_prob = (CREV_RATE/100)*windCount;
+    return crev_prob;
 }
 
 Cell* Agent::chooseNextCell() {
@@ -65,9 +81,9 @@ Cell* Agent::chooseNextCell() {
     for (auto c : frontier) {
         if (computeCellSafeProb(c) > safestCell.second)
             safestCell = make_pair(c, computeCellSafeProb(c));
-        else if (computeCellSafeProb(c) == safestCell.second) {
-            //check for monster val or other departaging
-            // if better swap
+        else if (computeCellSafeProb(c) == safestCell.second && safestCell.second != 0) {
+            if (computeCreviceProb(c) < computeCreviceProb(safestCell.first))
+                safestCell = make_pair(c, computeCellSafeProb(c));
         }
     }
     return safestCell.first;
@@ -82,8 +98,10 @@ void Agent::makeMove() {
     Actions curr_action = eff->moveAgent(cell);
 
     if (curr_action == Actions::death || curr_action == Actions::exited) {
-        if (curr_action == Actions::death)
+        if (curr_action == Actions::death) {
+            dies(true);
             performance += curr_action;
+        }
 
         if (curr_action == Actions::exited)
             performance += curr_action;
