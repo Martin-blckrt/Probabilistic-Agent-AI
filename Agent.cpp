@@ -21,13 +21,21 @@ bool Agent::isDead() const {
 	return m_dead;
 }
 
+void Agent::wakes() {
+	m_dead = false;
+	setExitFound(false);
+	sens->updateSurroundings(visited, frontier);
+}
+
 void Agent::dies(bool b) {
 	m_dead = b;
 
 	if(b)
 	{
 		visited.clear();
-		woods->agentRespawn();
+		frontier.clear();
+
+		performance = 0;
 	}
 }
 
@@ -75,22 +83,43 @@ double Agent::computeMonsterProb(Cell* cell) {
 }
 
 Cell* Agent::chooseNextCell() {
+
     pair <Cell*, double> safestCell;
-    for (auto c : frontier) {
+
+	for (auto c : frontier) {
+
         if (computeCellSafeProb(c) > safestCell.second)
             safestCell = make_pair(c, computeCellSafeProb(c));
+
         else if (computeCellSafeProb(c) == safestCell.second && safestCell.second != 0) {
+
             if (computeCreviceProb(c) < computeCreviceProb(safestCell.first))
                 safestCell = make_pair(c, computeCellSafeProb(c));
         }
     }
+
     return safestCell.first;
+}
+
+void Agent::setExitFound(bool b) {
+	exitFound = b;
+}
+
+bool Agent::foundExit() const {
+	return exitFound;
+}
+
+int Agent::getPerf() const {
+	return performance;
 }
 
 void Agent::makeMove() {
 
     // decide which cell
     Cell *cell = chooseNextCell();
+
+	auto coords = cell->getCoords();
+	cout << "I chose " << coords.first << ", " << coords.second << endl;
 
     if (computeMonsterProb(cell) > ROCK_THRESHOLD)
         throwRock(cell);
@@ -102,17 +131,24 @@ void Agent::makeMove() {
         if (curr_action == Actions::death) {
             dies(true);
             performance += curr_action;
+			cout << "I died !" << endl;
         }
 
-        if (curr_action == Actions::exited)
+        if (curr_action == Actions::exited) {
+	        setExitFound(true);
             performance += curr_action;
+	        cout << "I am out !" << endl;
+		}
 
     } else {
         visited.push_back(cell);
+	    remove(frontier.begin(), frontier.end(),cell);
+
         for (auto n: cell->getAdjCell())
             if (!isVisited(n))
                 frontier.push_back(n);
     }
+
     performance += Actions::move;
 }
 

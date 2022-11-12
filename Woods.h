@@ -13,9 +13,10 @@ public:
 	explicit Woods(int);
 	~Woods();
 
-	void generateMap(int);
+	void generateMap();
 	void destroyMap();
 
+	void setMapSize(int i) { mapsize = i; };
 	int getMapSize() const { return mapsize; };
 	void refreshMap();
 
@@ -24,7 +25,6 @@ public:
 
 	void setAgentCell(Cell * c);
 	Cell* getAgentCell();
-	void agentRespawn();
 
 	void setExit(bool b) { exitable = b; }
 	bool hasExit() const { return exitable; }

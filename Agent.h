@@ -9,16 +9,12 @@ class Agent {
 
 private:
 	bool m_dead = false;
+	bool exitFound = false;
 
 	Sensor * sens;
 	Effector * eff;
 
 	int performance = 0;
-
-	int deathCount = 0;
-	int rockUsed = 0;
-	int movesMade = 0;
-	int exitFound = 0;
 
 	Woods * woods;
 
@@ -29,6 +25,12 @@ public:
 
 	bool isDead() const;
 	void dies(bool b);
+	void wakes();
+
+	void setExitFound(bool b);
+	bool foundExit() const;
+	int getPerf() const;
+
 	void throwRock(Cell*);
 	void makeMove();
     bool isVisited(Cell*);

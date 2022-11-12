@@ -15,7 +15,7 @@
 #define PORTAL_RATE 30
 #define EXIT_RATE 30
 
-#define MOVE_COST 1
+#define MOVE_COST (-1)
 #define EXIT_FOUND 10
 #define DEATH (-10)
 #define ROCK_COST (-10)

@@ -7,11 +7,14 @@ using namespace std;
  */
 
 Woods::Woods(int msize) {
-	generateMap(msize);
+	mapsize = msize;
 }
 
-void Woods::generateMap(int msize) {
-	mapsize = msize;
+void Woods::generateMap() {
+
+	if (!map.empty())
+		destroyMap();
+
 
 	int probX = rand() % mapsize;
 	int probY = rand() % mapsize;
@@ -19,7 +22,7 @@ void Woods::generateMap(int msize) {
 	for (int i = 0; i < mapsize; i++) {
 		vector<Cell *> v;
 
-		for (int j = 0; j < msize; j++){
+		for (int j = 0; j < mapsize; j++){
 
 			bool agentHere = probX == i && probY == j;
 			bool forcedPortal = !hasExit() && (i == mapsize - 1 && j == mapsize - 1);
@@ -64,9 +67,13 @@ Woods::~Woods() {
 
 void Woods::destroyMap() {
 
-	for (const auto& i: map)
-		for (auto &j: i)
+	for (auto i: map) {
+		for (auto j : i)
 			delete j;
+		i.clear();
+	}
+
+	map.clear();
 }
 
 void Woods::refreshMap() {
@@ -83,23 +90,6 @@ Cell* Woods::getCell(int x, int y) {
 		return map[x][y];
 	else
 		return nullptr;
-}
-
-/*
- * OUTPUT FONCTIONS
- */
-
-ostream &operator<<(ostream &output, const Woods &w) {
-
-	for (const auto &i: w.map) {
-		cout << " ------------------------------------------------------------" << endl;
-		for (auto j: i)
-			output << j << " ";
-		output << endl;
-	}
-	cout << " ------------------------------------------------------------" << endl;
-
-	return output;
 }
 
 void Woods::setAgentCell(Cell * c) {
@@ -121,7 +111,20 @@ Cell *Woods::getAgentCell() {
 	return agentCell;
 }
 
-void Woods::agentRespawn() {
-	destroyMap();
-	generateMap(getMapSize());
+/*
+ * OUTPUT FONCTIONS
+ */
+
+ostream &operator<<(ostream &output, const Woods &w) {
+
+	for (const auto &i: w.map) {
+		cout << " ------------------------------------------------------------" << endl;
+		for (auto j: i)
+			output << j << " ";
+		output << endl;
+	}
+	cout << " ------------------------------------------------------------" << endl;
+
+	return output;
 }
+

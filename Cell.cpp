@@ -71,20 +71,19 @@ void Cell::updateAdjCell() {
 
 vector<Cell *> Cell::getAdjCell() {
 
-	auto map = *woods->getMap();
 	vector<Cell *> neigh;
 
 	if (x + 1 < msize)
-		neigh.push_back(map[x + 1][y]);
+		neigh.push_back(woods->getCell(x + 1, y));
 
 	if (x - 1 >= 0)
-		neigh.push_back(map[x - 1][y]);
+		neigh.push_back(woods->getCell(x - 1, y));
 
 	if (y + 1 < msize)
-		neigh.push_back(map[x][y + 1]);
+		neigh.push_back(woods->getCell(x, y + 1));
 
 	if (y - 1 >= 0)
-		neigh.push_back(map[x][y - 1]);
+		neigh.push_back(woods->getCell(x, y - 1));
 
 	neigh.shrink_to_fit();
 	return neigh;
@@ -154,8 +153,6 @@ void Cell::killMonster() {
 		if (!monsterNear)
 			cell->setStinky(false);
 	}
-
-
 }
 
 ostream &operator<<(ostream &output, Cell *c) {

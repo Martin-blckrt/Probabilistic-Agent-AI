@@ -14,25 +14,32 @@ int main(){
 
 	int msize = INITIAL_MAPSIZE;
 
+	auto sherwood = new Woods(msize);
+	auto hobbit = new Agent(sherwood);
+
 	while (true)
 	{
-		auto* sherwood = new Woods(msize);
-		auto* hobbit = new Agent(sherwood);
+		sherwood->generateMap();
+		hobbit->wakes();
 
-		cout << "The woods are growing " << "(" << msize << "x" << msize << ")" << endl;
+		cout << "The woods are changing ! " << "(" << msize << "x" << msize << ")" << endl;
+		cout << "Starting map" << endl;
 		cout << *sherwood << endl;
 
-		if (!hobbit->isDead())
-		{
-			// main stuff
+		while (!hobbit->isDead() && !hobbit->foundExit()) {
+			hobbit->makeMove();
+			cout << *sherwood << endl;
 		}
 
-		// if exit is reached, do these 2 :
-		delete hobbit;
-		delete sherwood;
+		if (hobbit->isDead())
+			msize = INITIAL_MAPSIZE;
 
-		msize++;
-		break;
+		if (hobbit->foundExit())
+			msize++;
+
+		sherwood->setMapSize(msize);
+
+		cout << "Agent performance was : " << hobbit->getPerf() << endl;
 	}
 
 	return 0;
