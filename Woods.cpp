@@ -118,13 +118,17 @@ Cell *Woods::getAgentCell() {
 ostream &operator<<(ostream &output, const Woods &w) {
 
 	for (const auto &i: w.map) {
-		cout << " ------------------------------------------------------------" << endl;
+        for (auto t = 0; t < w.mapsize; t++)
+            cout << "#########";
+		cout << "##" << endl;
 		for (auto j: i)
-			output << j << " ";
+			output << j ;
 		output << endl;
 	}
-	cout << " ------------------------------------------------------------" << endl;
-
+    for (auto t = 0; t < w.mapsize; t++)
+        cout << "#########";
+    cout << "##" << endl;
 	return output;
+
 }
 

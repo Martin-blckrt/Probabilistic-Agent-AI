@@ -157,44 +157,42 @@ void Cell::killMonster() {
 
 ostream &operator<<(ostream &output, Cell *c) {
 
-	output << "|";
+	output << "##";
 
 	if (c != nullptr) {
+
+        output << " ";
+
 		if (c->hasMonster())
 			output << " M";
-		else
-			output << " 0";
+		else if (c->hasCrevice())
+			output << " C";
+		else if (c->hasPortal() && c->isExit())
+			output << "EP";
+		else if(c->hasPortal() && c->hasAgent())
+			output << "AP";
+		else if (c->hasAgent())
+			output << " A";
+        else
+            output << "  ";
 
-		if (c->hasCrevice())
-			output << " - C";
-		else
-			output << " - 0";
+        output << " ";
 
-		if (c->hasPortal() && c->isExit())
-			output << " - EP";
-		else if(c->hasPortal())
-			output << " - NP";
-		else
-			output << " - 0 ";
+        if (c->isStinky() && c->isWindy())
+            output << "SW";
+		else if (c->isStinky())
+			output << "S ";
+		else if (c->isWindy())
+			output << "W ";
+        else
+            output << "  ";
 
-		if (c->hasAgent())
-			output << " - A";
-		else
-			output << " - 0";
-
-		output << " (";
-
-		if (c->isStinky())
-			output << "S";
-
-		if (c->isWindy())
-			output << "W";
-
-		output << ")";
+        output << " ";
 	}
 
 	if (c->getCoords().second == c->msize - 1)
-		output << " |";
+		output << "##";
 
 	return output;
+
 }
