@@ -18,8 +18,7 @@ private:
 	int deathCount = 0;
 	int rockUsed = 0;
 	int movesMade = 0;
-	int exitFound = 0;
-
+	
 	Woods * woods;
 
 public:
