@@ -26,6 +26,7 @@ public:
 	bool isDead() const;
 	void dies(bool b);
 	void wakes();
+	void forgetEverything();
 
 	void setExitFound(bool b);
 	bool foundExit() const;

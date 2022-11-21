@@ -24,17 +24,20 @@ bool Agent::isDead() const {
 void Agent::wakes() {
 	m_dead = false;
 	setExitFound(false);
+	forgetEverything();
 	sens->updateSurroundings(visited, frontier);
+}
+
+void Agent::forgetEverything() {
+	visited.clear();
+	frontier.clear();
 }
 
 void Agent::dies(bool b) {
 	m_dead = b;
 
-	if(b)
-	{
-		visited.clear();
-		frontier.clear();
-
+	if(b) {
+		forgetEverything();
 		performance = 0;
 	}
 }

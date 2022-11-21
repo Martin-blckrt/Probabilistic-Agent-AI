@@ -32,11 +32,12 @@ int main(){
 		}
 
 		if (hobbit->isDead())
-			msize = INITIAL_MAPSIZE;
+			msize = sherwood->mapsize;
 
 		if (hobbit->foundExit())
 			msize++;
 
+		hobbit->forgetEverything();
 		sherwood->setMapSize(msize);
 
 		cout << "Agent performance was : " << hobbit->getPerf() << endl;
