@@ -162,6 +162,8 @@ ostream &operator<<(ostream &output, Cell *c) {
 	if (c != nullptr) {
 
         output << " ";
+		if (c->hasAgent())
+			output << " A";
 
 		if (c->hasMonster())
 			output << " M";
@@ -170,9 +172,7 @@ ostream &operator<<(ostream &output, Cell *c) {
 		else if (c->hasPortal() && c->isExit())
 			output << "EP";
 		else if(c->hasPortal() && c->hasAgent())
-			output << "AP";
-		else if (c->hasAgent())
-			output << " A";
+			output << "P";
         else
             output << "  ";
 
