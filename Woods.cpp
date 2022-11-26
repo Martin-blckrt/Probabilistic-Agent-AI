@@ -15,6 +15,7 @@ void Woods::generateMap() {
 	if (!map.empty())
 		destroyMap();
 
+    exitable = false;
 
 	int probX = rand() % mapsize;
 	int probY = rand() % mapsize;
@@ -55,6 +56,7 @@ void Woods::generateMap() {
 					}
 			}
 		}
+        cout << "let me ouuuut" << endl;
 	}
 
 	refreshMap();

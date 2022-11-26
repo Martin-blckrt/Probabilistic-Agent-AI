@@ -28,7 +28,7 @@ int main() {
         vector<double> perfs_for_rr;
 
         for (int life = LIFES; life > 0; life--) {
-            cout << "Hobbit is on life " << life << endl;
+            cout << "new map" << endl;
             msize = INITIAL_MAPSIZE;
 
             while (!hobbit->isDead()) {
