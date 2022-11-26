@@ -43,23 +43,35 @@ void Woods::generateMap() {
 	}
 
 	bool exit_created = false;
+    int v = 0;
 
 	while (!hasExit()){
-
+        v++;
 		for (const auto& r : map) {
 			for(auto c : r){
 
-				if (c->hasPortal() && !exit_created)
-					if (c->tryForExit()){
-						setExit(true);
-						exit_created = true;
-					}
+				if (c->hasPortal() && !exit_created) {
+                    if (c->tryForExit()) {
+                        setExit(true);
+                        exit_created = true;
+                    }
+                }
 			}
 		}
-        cout << "let me ouuuut" << endl;
+        if (v > 10)
+            break;
 	}
 
 	refreshMap();
+
+    bool check = false;
+    for (int i = 0; i < mapsize; i++)
+        for (int j = 0; j < mapsize; j++)
+            if (map[i][j]->isExit())
+                check = true;
+
+    if (!check)
+        generateMap();
 }
 
 Woods::~Woods() {

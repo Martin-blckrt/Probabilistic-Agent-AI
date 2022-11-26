@@ -127,7 +127,6 @@ void Agent::makeMove() {
 
     // decide which cell
     Cell *cell = chooseNextCell();
-    cout << cell << endl;
 
     if (cell != nullptr) {
         auto coords = cell->getCoords();
@@ -143,18 +142,19 @@ void Agent::makeMove() {
         Actions curr_action = eff->moveAgent(cell);
 
         if (curr_action == Actions::death || curr_action == Actions::exited) {
+            int sz = woods->getMapSize();
+
             if (curr_action == Actions::death) {
                 dies(true);
-                performance += curr_action;
                 //cout << "I died !" << endl;
             }
 
             if (curr_action == Actions::exited) {
                 setExitFound(true);
-                int sz = woods->getMapSize();
-                performance += curr_action * (sz * sz);
                 //cout << "I am out !" << endl;
             }
+
+            performance += curr_action * (sz * sz);
 
         } else {
             frontier.erase(find(frontier.begin(), frontier.end(), cell));
@@ -166,8 +166,7 @@ void Agent::makeMove() {
         }
 
         performance += Actions::move * manhattan;
-    } else
-        cout << "Map isnt exitable" << endl;
+    }
 
 }
 
