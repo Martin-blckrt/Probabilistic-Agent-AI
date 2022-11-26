@@ -145,7 +145,8 @@ void Agent::makeMove() {
 
         if (curr_action == Actions::exited) {
 	        setExitFound(true);
-            performance += curr_action * woods->getMapSize();
+			int sz = woods->getMapSize();
+            performance += curr_action * (sz * sz);
 	        cout << "I am out !" << endl;
 		}
 
