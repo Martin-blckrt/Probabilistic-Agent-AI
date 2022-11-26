@@ -14,6 +14,8 @@ private:
 	Sensor * sens;
 	Effector * eff;
 
+    double rock_rate;
+
 	int performance = 0;
 
 	Woods * woods;
@@ -24,14 +26,15 @@ public:
 	~Agent();
 
 	bool isDead() const;
-	void dies(bool b);
-	void wakes();
+	void dies(bool);
+	void wakes(double);
 	void forgetEverything();
 
 	void setExitFound(bool b);
 	bool foundExit() const;
 	void setPerf(int);
 	int getPerf() const;
+    double getRR() const;
 
 	void throwRock(Cell*);
 	void makeMove();

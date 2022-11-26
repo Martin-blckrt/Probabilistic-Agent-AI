@@ -22,11 +22,12 @@ bool Agent::isDead() const {
 	return m_dead;
 }
 
-void Agent::wakes() {
+void Agent::wakes(double rr) {
 	m_dead = false;
 	setExitFound(false);
 	forgetEverything();
 	sens->updateSurroundings(visited, frontier);
+    rock_rate = rr;
 }
 
 void Agent::forgetEverything() {
@@ -59,7 +60,7 @@ double Agent::computeCellSafeProb(Cell* cell) {
 }
 
 double Agent::computeCreviceProb(Cell* cell) {
-    int windCount = 0;
+    double windCount = 0;
     vector<Cell*> neigh = cell->getAdjCell();
     for (auto n : neigh) {
         if (isVisited(n)) {
@@ -67,12 +68,12 @@ double Agent::computeCreviceProb(Cell* cell) {
                 windCount++;
         }
     }
-    double crev_prob = (CREV_RATE/100)*windCount;
+    double crev_prob = ((double)CREV_RATE/100)*windCount;
     return crev_prob;
 }
 
 double Agent::computeMonsterProb(Cell* cell) {
-    int stinkCount = 0;
+    double stinkCount = 0;
     vector<Cell*> neigh = cell->getAdjCell();
     for (auto n : neigh) {
         if (isVisited(n)) {
@@ -119,35 +120,39 @@ int Agent::getPerf() const {
 	return performance;
 }
 
+double Agent::getRR() const {
+    return rock_rate;
+}
+
 void Agent::makeMove() {
 
     // decide which cell
     Cell *cell = chooseNextCell();
 
 	auto coords = cell->getCoords();
-	cout << "I chose " << coords.first << ", " << coords.second << endl;
+	//cout << "I chose " << coords.first << ", " << coords.second << endl;
 
-    if (computeMonsterProb(cell) > ROCK_THRESHOLD)
+    if (computeMonsterProb(cell) > rock_rate)
         throwRock(cell);
 
 	auto agCellCoords = woods->getAgentCell()->getCoords();
 	int manhattan = abs(agCellCoords.first - coords.first) + abs(agCellCoords.second - coords.second);
 
-    //send chosen cell
+    // send chosen cell
     Actions curr_action = eff->moveAgent(cell);
 
     if (curr_action == Actions::death || curr_action == Actions::exited) {
         if (curr_action == Actions::death) {
             dies(true);
             performance += curr_action;
-			cout << "I died !" << endl;
+			//cout << "I died !" << endl;
         }
 
         if (curr_action == Actions::exited) {
 	        setExitFound(true);
 			int sz = woods->getMapSize();
             performance += curr_action * (sz * sz);
-	        cout << "I am out !" << endl;
+	        //cout << "I am out !" << endl;
 		}
 
     } else {
