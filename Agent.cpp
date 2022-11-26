@@ -1,5 +1,6 @@
 #include "Agent.h"
 #include <algorithm>
+#include <cstdlib>
 
 using namespace std;
 
@@ -36,10 +37,8 @@ void Agent::forgetEverything() {
 void Agent::dies(bool b) {
 	m_dead = b;
 
-	if(b) {
+	if(b)
 		forgetEverything();
-		performance = 0;
-	}
 }
 
 void Agent::throwRock(Cell* cell){
@@ -112,6 +111,10 @@ bool Agent::foundExit() const {
 	return exitFound;
 }
 
+void Agent::setPerf(int p) {
+	performance = p;
+}
+
 int Agent::getPerf() const {
 	return performance;
 }
@@ -127,6 +130,9 @@ void Agent::makeMove() {
     if (computeMonsterProb(cell) > ROCK_THRESHOLD)
         throwRock(cell);
 
+	auto agCellCoords = woods->getAgentCell()->getCoords();
+	int manhattan = abs(agCellCoords.first - coords.first) + abs(agCellCoords.second - coords.second);
+
     //send chosen cell
     Actions curr_action = eff->moveAgent(cell);
 
@@ -139,7 +145,7 @@ void Agent::makeMove() {
 
         if (curr_action == Actions::exited) {
 	        setExitFound(true);
-            performance += curr_action;
+            performance += curr_action * woods->getMapSize();
 	        cout << "I am out !" << endl;
 		}
 
@@ -152,7 +158,7 @@ void Agent::makeMove() {
                 frontier.push_back(n);
     }
 
-    performance += Actions::move;
+    performance += Actions::move * manhattan;
 }
 
 

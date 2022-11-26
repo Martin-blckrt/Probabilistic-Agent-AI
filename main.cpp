@@ -31,8 +31,10 @@ int main(){
 			cout << *sherwood << endl;
 		}
 
+		cout << "Agent performance was : " << hobbit->getPerf() << endl;
+
 		if (hobbit->isDead())
-			msize = sherwood->mapsize;
+			hobbit->setPerf(0);
 
 		if (hobbit->foundExit())
 			msize++;
@@ -40,7 +42,7 @@ int main(){
 		hobbit->forgetEverything();
 		sherwood->setMapSize(msize);
 
-		cout << "Agent performance was : " << hobbit->getPerf() << endl;
+
 	}
 
 	return 0;

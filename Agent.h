@@ -30,6 +30,7 @@ public:
 
 	void setExitFound(bool b);
 	bool foundExit() const;
+	void setPerf(int);
 	int getPerf() const;
 
 	void throwRock(Cell*);
