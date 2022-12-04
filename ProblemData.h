@@ -10,8 +10,8 @@
 
 #define INITIAL_MAPSIZE 3
 
-#define MONSTER_RATE 20
-#define CREV_RATE 20
+#define MONSTER_RATE 11
+#define CREV_RATE 11
 #define PORTAL_RATE 30
 #define EXIT_RATE 30
 

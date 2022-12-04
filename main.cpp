@@ -1,13 +1,16 @@
 #include <iostream>
 #include <unistd.h>
+#include <chrono>
 
 #include "ProblemData.h"
 #include "Woods.h"
 #include "Agent.h"
 
 #define LIFES 10000
+#define TEST_DURATION 2s
 
 using namespace std;
+using namespace std::chrono;
 
 int main() {
 
@@ -26,27 +29,21 @@ int main() {
     int index = 0;
     for (auto RR: perf[0]) {
         cout << "Computing performance for rock rate " << RR << " ..." << endl;
+        auto start = high_resolution_clock::now();
+        bool elapsed = false;
 
         vector<double> perfs_for_rr;
         hobbit->setPerf(0);
 
-        for (int life = LIFES; life > 0; life--) {
+        while (!elapsed) {
             msize = INITIAL_MAPSIZE;
 
             while (!hobbit->isDead()) {
                 sherwood->generateMap();
                 hobbit->wakes(RR);
 
-                //cout << "The woods are changing ! " << "(" << msize << "x" << msize << ")" << endl;
-                //cout << "Starting map" << endl;
-                //cout << *sherwood << endl;
-
-                while (!hobbit->isDead() && !hobbit->foundExit()) {
+                while (!hobbit->isDead() && !hobbit->foundExit())
                     hobbit->makeMove();
-                    //cout << *sherwood << endl;
-                }
-
-                //cout << "Agent performance was : " << hobbit->getPerf() << endl;
 
                 if (hobbit->foundExit()) {
                     msize++;
@@ -57,6 +54,8 @@ int main() {
 
             perfs_for_rr.push_back(hobbit->getPerf());
             hobbit->dies(false);
+            auto current_time = high_resolution_clock::now();
+            elapsed = duration_cast<seconds>(current_time - start) >= TEST_DURATION;
         }
         perf[1][index] = accumulate(perfs_for_rr.begin(), perfs_for_rr.end(), 0.0) / LIFES;
         index++;
@@ -67,6 +66,7 @@ int main() {
     for (int i = 0; i < perf[0].size(); i++)
         cout << "Performance for rock rate at " << perf[0][i] << " is : " << perf[1][i] << endl;
 
+    cout << "\nThe best rate is " << perf[0][max_element(perf[1].begin(), perf[1].end()) - perf[1].begin()] << endl;
     double bestRockRate = perf[0][max_element(perf[1].begin(), perf[1].end()) - perf[1].begin()];
     msize = INITIAL_MAPSIZE;
 
@@ -101,6 +101,4 @@ int main() {
         hobbit->forgetEverything();
         sherwood->setMapSize(msize);
     }
-
-    return 0;
 }
