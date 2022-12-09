@@ -144,15 +144,11 @@ void Agent::makeMove() {
         if (curr_action == Actions::death || curr_action == Actions::exited) {
             int sz = woods->getMapSize();
 
-            if (curr_action == Actions::death) {
+            if (curr_action == Actions::death)
                 dies(true);
-                //cout << "I died !" << endl;
-            }
 
-            if (curr_action == Actions::exited) {
+            if (curr_action == Actions::exited)
                 setExitFound(true);
-                //cout << "I am out !" << endl;
-            }
 
             performance += curr_action * (sz * sz);
 
