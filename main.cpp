@@ -69,10 +69,11 @@ int main() {
     cout << "\nThe best rate is " << perf[0][max_element(perf[1].begin(), perf[1].end()) - perf[1].begin()] << endl;
     double bestRockRate = perf[0][max_element(perf[1].begin(), perf[1].end()) - perf[1].begin()];
     msize = INITIAL_MAPSIZE;
-
+	sherwood->setMapSize(msize);
     cout << "\nPress a key to continue to simualtion" << endl;
     fflush(stdin);
     getchar();
+
 
     while (true) {
         sherwood->generateMap();
