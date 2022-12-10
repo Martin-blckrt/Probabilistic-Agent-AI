@@ -160,10 +160,11 @@ ostream &operator<<(ostream &output, Cell *c) {
 	output << "##";
 
 	if (c != nullptr) {
-
-        output << " ";
 		if (c->hasAgent())
 			output << " A";
+
+		output << " ";
+
 		if (c->hasMonster())
 			output << " M";
 		else if (c->hasCrevice())

@@ -6,4 +6,4 @@ set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libstdc++ -static-libgcc")
 include_directories(.)
 
 add_executable(LostInTheWoods Cell.cpp Cell.h
-        Woods.cpp Woods.h ProblemData.h Agent.cpp Agent.h bayes.h   main.cpp Sensor.h Effector.h)
+        Woods.cpp Woods.h ProblemData.h Agent.cpp Agent.h main.cpp Sensor.h Effector.h)

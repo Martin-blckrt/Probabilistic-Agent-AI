@@ -6,8 +6,6 @@
 #include <utility>
 #include <random>
 
-#include "bayes.h"
-
 #define INITIAL_MAPSIZE 3
 
 #define MONSTER_RATE 13
